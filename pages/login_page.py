@@ -1,10 +1,11 @@
 from pages.base_page import BasePage
-from playwright.sync_api import Page
+from playwright.sync_api import Page,expect
 
 class LoginPage(BasePage):
     password_input="input[name='password']"
     username_input = "input[name='username']"
     login_button = "//button[@type='submit']"
+    error_alert="//div[@role='alert']"
 
     def __init__(self,page: Page):
         super().__init__(page)
@@ -21,6 +22,11 @@ class LoginPage(BasePage):
 
     def click_login_button(self):
         self.click(self.login_button)
+        return self
+
+    def expect_alert(self):
+        alert_locator=self.page.locator(self.error_alert)
+        expect(alert_locator).to_be_visible()
         return self
     
 
