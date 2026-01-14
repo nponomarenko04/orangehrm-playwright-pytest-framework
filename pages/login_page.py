@@ -1,24 +1,26 @@
 from pages.base_page import BasePage
+from playwright.sync_api import Page
 
 class LoginPage(BasePage):
-    # Локаторы для OrangeHRM
-    USERNAME_INPUT = "input[name='username']"
-    PASSWORD_INPUT = "input[name='password']"
-    LOGIN_BUTTON = "button[type='submit']"
-    ERROR_MESSAGE = ".oxd-alert-content-text"
-    FORGOT_PASSWORD_LINK = ".oxd-text.oxd-text--p.orangehrm-login-forgot-header"
-    
+    password_input="input[name='password']"
+    username_input = "input[name='username']"
+    login_button = "//button[@type='submit']"
+
+    def __init__(self,page: Page):
+        super().__init__(page)
+        self.url = "https://opensource-demo.orangehrmlive.com"
+
     def open_login_page(self):
-        self.navigate("https://opensource-demo.orangehrmlive.com")
+        self.navigate("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login")
+        return self
+
+    def fill_login_form(self, username: str = "", password: str = ""):
+            self.fill(self.username_input, username)
+            self.fill(self.password_input, password)
+
+
+    def click_login_button(self):
+        self.click(self.login_button)
         return self
     
-    def login(self, username: str = "Admin", password: str = "admin123"):
-        self.fill(self.USERNAME_INPUT, username)
-        self.fill(self.PASSWORD_INPUT, password)
-        self.click(self.LOGIN_BUTTON)
-        return self
-    
-    def get_error_text(self):
-        if self.is_element_visible(self.ERROR_MESSAGE):
-            return self.get_text(self.ERROR_MESSAGE)
-        return ""
+
