@@ -25,8 +25,6 @@ class LoginPage(BasePage):
         return self
 
     def expect_alert(self):
-        alert_locator=self.page.locator(self.error_alert)
-        expect(alert_locator).to_be_visible()
-        return self
+        return self.is_element_visible(self.error_alert)
     
 
