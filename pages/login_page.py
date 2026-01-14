@@ -6,6 +6,7 @@ class LoginPage(BasePage):
     username_input = "input[name='username']"
     login_button = "//button[@type='submit']"
     error_alert="//div[@role='alert']"
+    company_image="//img[@alt='company-branding']"
 
     def __init__(self,page: Page):
         super().__init__(page)
@@ -27,4 +28,5 @@ class LoginPage(BasePage):
     def expect_alert(self):
         return self.is_element_visible(self.error_alert)
     
-
+    def expect_logo(self):
+        return self.is_element_visible(self.company_image)

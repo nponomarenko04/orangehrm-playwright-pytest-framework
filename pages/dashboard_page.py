@@ -3,6 +3,7 @@ from pages.base_page import BasePage
 
 class DashboardPage(BasePage):
     dashboard_logo= "//div[@class='oxd-brand-banner']"
+    
 
     
     def is_dashboard_loaded(self):
